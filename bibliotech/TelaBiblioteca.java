@@ -1,9 +1,11 @@
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
 
 public class TelaBiblioteca extends JFrame {
+
     private Biblioteca biblioteca;
     private JTextField campoTitulo;
     private JTextField campoMatricula;
@@ -47,7 +49,6 @@ public class TelaBiblioteca extends JFrame {
         botaoEmprestar.addActionListener(e -> emprestar());
         botaoDevolver.addActionListener(e -> devolver());
         botaoAtualizar.addActionListener(e -> atualizarAcervo());
-
 
         botoes.add(botaoEmprestar);
         botoes.add(botaoDevolver);
@@ -116,15 +117,30 @@ public class TelaBiblioteca extends JFrame {
     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
 
-        biblioteca.cadastrarLivro(
-            new Livro("Dom Casmurro", "Machado de Assis", 1899)
-        );
-        biblioteca.cadastrarLivro(
-            new Livro("Capitaes da Areia", "Jorge Amado", 1937)
-        );
+        try {
+            biblioteca.cadastrarLivro(
+                new Livro("Dom Casmurro", "Machado de Assis", 1899)
+            );
+
+            biblioteca.cadastrarLivro(
+                new Livro("Capitaes da Areia", "Jorge Amado", 1937)
+            );
+
+        } catch (LivroInvalidoException e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Erro ao cadastrar livro: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
         biblioteca.cadastrarLeitor(
             new Leitor("Pedro Alves", "2026010", 1)
         );
+
         biblioteca.cadastrarLeitor(
             new Leitor("Ana Lima", "2026011", 2)
         );

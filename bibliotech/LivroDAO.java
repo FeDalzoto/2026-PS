@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -124,8 +125,11 @@ public class LivroDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Erro ao listar livros: "
-                    + e.getMessage());
+
+            throw new PersistenciaException(
+                    "Não foi possível consultar os livros.",
+                    e
+            );
         }
 
         return livros;
@@ -150,14 +154,18 @@ public class LivroDAO {
                             resultado.getString("titulo"),
                             resultado.getString("autor"),
                             resultado.getInt("ano"));
+
                     livro.setCapa(resultado.getString("capa"));
                     return livro;
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar livro: "
-                    + e.getMessage());
+
+            throw new PersistenciaException(
+                    "Não foi possível buscar o livro pelo ID.",
+                    e
+            );
         }
 
         return null;
@@ -197,12 +205,12 @@ public class LivroDAO {
 
         } catch (SQLException e) {
 
-            System.out.println(
-                    "Erro ao buscar livros: " +
-                            e.getMessage());
+            throw new PersistenciaException(
+                    "Não foi possível buscar livros pelo título.",
+                    e
+            );
         }
 
         return livros;
     }
-
 }
